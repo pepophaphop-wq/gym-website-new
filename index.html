@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitless 2 Fitness - Agra's Most Loved Gym</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', Arial, sans-serif; background: #000; color: #fff; overflow-x: hidden; }
+        
+        /* Navigation */
+        nav { position: fixed; top: 0; width: 100%; z-index: 1000; padding: 20px 60px; display: flex; justify-content: space-between; align-items: center; background: transparent; transition: all 0.4s; }
+        nav.scrolled { background: rgba(0,0,0,0.95); backdrop-filter: blur(20px); padding: 15px 60px; }
+        .logo { font-size: 22px; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; }
+        .logo span { color: #f2c94c; }
+        .nav-links { display: flex; list-style: none; gap: 40px; }
+        .nav-links a { color: #fff; text-decoration: none; font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; }
+        .nav-links a:hover { color: #f2c94c; }
+        .nav-cta { background: #f2c94c; color: #000; padding: 10px 25px; border: none; border-radius: 30px; font-weight: 800; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; }
+        
+        /* Hero */
+        .hero { height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1920') center/cover; filter: brightness(0.85); }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,0,0,0.6)); }
+        .hero-content { position: relative; z-index: 2; text-align: center; max-width: 800px; padding: 0 30px; }
+        .hero-badge { display: inline-block; background: rgba(242,201,76,0.2); border: 2px solid #f2c94c; padding: 10px 25px; border-radius: 30px; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 4px; color: #f2c94c; margin-bottom: 30px; }
+        .hero h1 { font-size: 72px; font-weight: 900; text-transform: uppercase; line-height: 1.1; margin-bottom: 25px; letter-spacing: -3px; text-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+        .hero h1 span { color: #f2c94c; display: block; }
+        .hero-subtitle { font-size: 20px; font-weight: 300; letter-spacing: 3px; margin-bottom: 40px; opacity: 0.9; }
+        .hero-buttons { display: flex; gap: 20px; justify-content: center; }
+        .btn { padding: 18px 50px; border-radius: 50px; font-size: 16px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: all 0.4s; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; border: none; }
+        .btn-primary { background: #f2c94c; color: #000; }
+        .btn-primary:hover { background: #fff; transform: translateY(-3px); box-shadow: 0 15px 40px rgba(242,201,76,0.4); }
+        .btn-secondary { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.4); }
+        .btn-secondary:hover { border-color: #f2c94c; background: rgba(242,201,76,0.1); transform: translateY(-3px); }
+        .scroll-down { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); animation: bounce 2s infinite; color: #f2c94c; font-size: 30px; }
+        @keyframes bounce { 0%,20%,50%,80%,100% { transform: translateX(-50%) translateY(0); } 40% { transform: translateX(-50%) translateY(-20px); } 60% { transform: translateX(-50%) translateY(-10px); } }
+        
+        /* Stats */
+        .stats { background: #0a0a0a; padding: 60px; display: flex; justify-content: center; gap: 100px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .stat h2 { font-size: 48px; font-weight: 900; color: #f2c94c; margin-bottom: 10px; }
+        .stat p { font-size: 14px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.6; }
+        
+        /* Sections */
+        .section { padding: 120px 60px; max-width: 1400px; margin: 0 auto; }
+        .section-label { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 4px; color: #f2c94c; margin-bottom: 20px; display: block; }
+        .section h2 { font-size: 48px; font-weight: 900; text-transform: uppercase; margin-bottom: 30px; line-height: 1.1; }
+        .section h2 span { color: #f2c94c; }
+        .section p { font-size: 18px; line-height: 1.8; opacity: 0.7; max-width: 600px; margin-bottom: 20px; }
+        
+        /* About */
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-top: 50px; }
+        .about-img { width: 100%; border-radius: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
+        .features { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; list-style: none; margin-top: 30px; }
+        .features li { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; }
+        .features li::before { content: "✦"; color: #f2c94c; font-size: 20px; }
+        
+        /* Classes */
+        .classes-section { background: #0a0a0a; padding: 120px 60px; }
+        .classes-header { text-align: center; margin-bottom: 80px; }
+        .classes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1400px; margin: 0 auto; }
+        .class-card { position: relative; height: 450px; overflow: hidden; border-radius: 20px; cursor: pointer; }
+        .class-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s; filter: brightness(0.7); }
+        .class-card:hover img { transform: scale(1.1); filter: brightness(0.9); }
+        .class-content { position: absolute; bottom: 0; left: 0; width: 100%; padding: 40px; background: linear-gradient(to top, rgba(0,0,0,0.95), transparent); }
+        .class-content h3 { font-size: 28px; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; }
+        .class-tag { display: inline-block; background: #f2c94c; color: #000; padding: 5px 15px; border-radius: 20px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; }
+        
+        /* Billboard */
+        .billboard-section { padding: 100px 60px; text-align: center; background: #000; }
+        .billboard-img { max-width: 500px; width: 100%; border-radius: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.5); margin-top: 40px; }
+        
+        /* Gallery */
+        .gallery-section { background: #0a0a0a; padding: 120px 60px; }
+        .gallery-header { text-align: center; margin-bottom: 60px; }
+        .gallery-masonry { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(3, 280px); gap: 15px; max-width: 1400px; margin: 0 auto; }
+        .g-item { overflow: hidden; border-radius: 15px; position: relative; cursor: pointer; }
+        .g-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s; filter: brightness(0.7); }
+        .g-item:hover img { transform: scale(1.15); filter: brightness(1); }
+        .g-item.tall { grid-row: span 2; }
+        .g-item.wide { grid-column: span 2; }
+        
+        /* Contact */
+        .contact-section { padding: 120px 60px; text-align: center; background: #000; position: relative; overflow: hidden; }
+        .contact-section::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(242,201,76,0.05), transparent); animation: rotate 30s linear infinite; }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .contact-box { position: relative; z-index: 2; max-width: 600px; margin: 0 auto; background: rgba(255,255,255,0.03); padding: 60px; border-radius: 30px; border: 1px solid rgba(242,201,76,0.2); backdrop-filter: blur(10px); }
+        .contact-box .address { font-size: 18px; line-height: 2; margin-bottom: 30px; }
+        .contact-box .address strong { color: #f2c94c; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 15px; }
+        .contact-box .hours { font-size: 18px; line-height: 2; margin-bottom: 30px; }
+        .contact-box .hours strong { color: #f2c94c; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 15px; }
+        .button-group { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+        .btn-whatsapp { background: #25D366; color: #fff; }
+        .btn-whatsapp:hover { background: #128C7E; transform: translateY(-3px); }
+        .btn-call { background: #e74c3c; color: #fff; }
+        .btn-call:hover { background: #c0392b; transform: translateY(-3px); }
+        
+        /* Footer */
+        footer { background: #000; padding: 60px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
+        .footer-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; text-align: left; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .footer-brand .logo { font-size: 28px; margin-bottom: 20px; }
+        .footer-brand p { font-size: 15px; line-height: 1.8; opacity: 0.7; margin-bottom: 20px; }
+        .footer-brand .social { display: flex; gap: 15px; }
+        .footer-brand .social a { width: 45px; height: 45px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: #fff; text-decoration: none; transition: 0.3s; font-size: 20px; }
+        .footer-brand .social a:hover { background: #f2c94c; color: #000; }
+        .footer-column h4 { font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 25px; color: #f2c94c; }
+        .footer-column ul { list-style: none; }
+        .footer-column ul li { margin-bottom: 12px; }
+        .footer-column ul li a { color: #fff; text-decoration: none; opacity: 0.7; transition: 0.3s; font-size: 14px; }
+        .footer-column ul li a:hover { color: #f2c94c; opacity: 1; }
+        .footer-column p { font-size: 14px; line-height: 1.8; opacity: 0.7; margin-bottom: 15px; }
+        .footer-bottom { max-width: 1200px; margin: 30px auto 0; display: flex; justify-content: space-between; align-items: center; font-size: 13px; opacity: 0.6; }
+        
+        /* Floating WhatsApp */
+        .float-whatsapp { position: fixed; bottom: 30px; right: 30px; background: #25D366; color: white; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 25px rgba(37,211,102,0.4); z-index: 9999; text-decoration: none; font-size: 32px; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.4); } 70% { box-shadow: 0 0 0 20px rgba(37,211,102,0); } 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); } }
+        
+        /* Responsive */
+        @media (max-width: 1024px) { .classes-grid { grid-template-columns: repeat(2, 1fr); } .gallery-masonry { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(4, 250px); } .g-item.wide { grid-column: span 2; } .g-item.tall { grid-row: span 1; } .footer-content { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 768px) { .hero h1 { font-size: 40px; } .stats { flex-direction: column; gap: 40px; } .about-grid { grid-template-columns: 1fr; } .classes-grid { grid-template-columns: 1fr; } .gallery-masonry { grid-template-columns: 1fr; grid-template-rows: repeat(7, 300px); } .g-item.wide { grid-column: span 1; } .section { padding: 80px 20px; } .classes-section { padding: 80px 20px; } .gallery-section { padding: 80px 20px; } .contact-section { padding: 80px 20px; } .contact-box { padding: 40px 20px; } .footer-content { grid-template-columns: 1fr; text-align: center; } .footer-brand .social { justify-content: center; } .footer-bottom { flex-direction: column; gap: 10px; } }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <div class="logo">Fitless <span>2</span> Fitness</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#classes">Classes</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Join Now</button>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-badge">Agra's Most Loved Gym</div>
+            <h1>Fitless <span>2</span> Fitness</h1>
+            <p class="hero-subtitle">Where You're Seen · Dayalbagh · Agra</p>
+            <div class="hero-buttons">
+                <a href="https://wa.me/918630049249?text=Hi%20F2F%20Gym%2C%20I%20am%20interested%20in%20joining.%20Please%20share%20details." class="btn btn-primary">💬 WhatsApp Now</a>
+                <a href="#classes" class="btn btn-secondary">Explore Classes</a>
+            </div>
+        </div>
+        <div class="scroll-down">↓</div>
+    </section>
+
+    <section class="stats">
+        <div class="stat"><h2>1500+</h2><p>Happy Members</p></div>
+        <div class="stat"><h2>50+</h2><p>Expert Trainers</p></div>
+        <div class="stat"><h2>25+</h2><p>Fitness Classes</p></div>
+        <div class="stat"><h2>12+</h2><p>Years Experience</p></div>
+    </section>
+
+    <section class="section" id="about">
+        <span class="section-label">About Us</span>
+        <h2>Where Fitness <span>Meets Passion</span></h2>
+        <div class="about-grid">
+            <div>
+                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800" alt="Gym Interior" class="about-img">
+            </div>
+            <div>
+                <p>Fitless 2 Fitness is Agra's premier fitness destination. We offer state-of-the-art equipment, expert trainers, and a motivating environment.</p>
+                <p>From CrossFit and Zumba to Yoga and Weight Training - we have everything you need!</p>
+                <ul class="features">
+                    <li>CrossFit Training</li>
+                    <li>Zumba Classes</li>
+                    <li>Spin Bike Studio</li>
+                    <li>Yoga & Meditation</li>
+                    <li>Cardio Zone</li>
+                    <li>Weight Training</li>
+                    <li>Functional Training</li>
+                    <li>Ladies Section</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="classes-section" id="classes">
+        <div class="classes-header">
+            <span class="section-label">Our Programs</span>
+            <h2>Find Your <span>Rhythm</span></h2>
+        </div>
+        <div class="classes-grid">
+            <div class="class-card">
+                <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600" alt="CrossFit">
+                <div class="class-content">
+                    <span class="class-tag">Strength</span>
+                    <h3>CrossFit</h3>
+                </div>
+            </div>
+            <div class="class-card">
+                <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=600" alt="Cardio">
+                <div class="class-content">
+                    <span class="class-tag">Cardio</span>
+                    <h3>Spin & Cardio</h3>
+                </div>
+            </div>
+            <div class="class-card">
+                <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=600" alt="Ladies">
+                <div class="class-content">
+                    <span class="class-tag">Ladies</span>
+                    <h3>Ladies Section</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="billboard-section">
+        <span class="section-label">What We Offer</span>
+        <h2>Our <span>Services</span></h2>
+        <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=500" alt="Services" class="billboard-img">
+    </section>
+
+    <section class="gallery-section" id="gallery">
+        <div class="gallery-header">
+            <span class="section-label">Inside F2F</span>
+            <h2>The <span>Space</span></h2>
+        </div>
+        <div class="gallery-masonry">
+            <div class="g-item wide"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800" alt="Reception"></div>
+            <div class="g-item tall"><img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600" alt="Punching Bags"></div>
+            <div class="g-item"><img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=600" alt="Trainers"></div>
+            <div class="g-item wide"><img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=800" alt="Cardio Area"></div>
+            <div class="g-item"><img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=600" alt="Spin Bikes"></div>
+            <div class="g-item tall"><img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600" alt="Weight Training"></div>
+            <div class="g-item wide"><img src="https://images.unsplash.com/photo-1593079831268-3381b0db4a77?w=800" alt="Billboard"></div>
+            <div class="g-item"><img src="https://images.unsplash.com/photo-1576678927484-cc907957088c?w=600" alt="Ladies Gym"></div>
+        </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+        <span class="section-label">Get In Touch</span>
+        <h2>Ready to <span>Transform?</span></h2>
+        <p style="margin-bottom: 50px;">Book your free trial session today</p>
+        <div class="contact-box">
+            <div class="address">
+                <strong>CONTACT</strong>
+                Pushpanjali Heights, Near Jatin Resorts<br>
+                Dayalbagh, Agra, Uttar Pradesh<br>
+                +91 86300 49249<br>
+                info@fitless2fitness.com
+            </div>
+            <div class="hours">
+                <strong>GYM HOURS</strong>
+                Mon – Sat: 5:30 AM – 10:30 PM<br>
+                Sunday: 6:00 AM – 2:00 PM
+            </div>
+            <div class="button-group">
+                <a href="https://wa.me/918630049249?text=Hi%20F2F%20Gym%2C%20I%20am%20interested%20in%20joining.%20Please%20share%20details." class="btn btn-whatsapp">💬 WhatsApp Now</a>
+                <a href="tel:+918630049249" class="btn btn-call">📞 Call Now</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="logo">Fitless <span>2</span> Fitness</div>
+                <p>Agra's Most Loved Gym. Where fitness meets passion. Transform your body and mind with our expert trainers and premium equipment.</p>
+                <div class="social">
+                    <a href="#">📘</a>
+                    <a href="#">📸</a>
+                    <a href="#">▶️</a>
+                    <a href="#">💬</a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#classes">Classes</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Programs</h4>
+                <ul>
+                    <li><a href="#">CrossFit</a></li>
+                    <li><a href="#">Zumba</a></li>
+                    <li><a href="#">Yoga</a></li>
+                    <li><a href="#">Weight Training</a></li>
+                    <li><a href="#">Personal Training</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Contact</h4>
+                <p>Pushpanjali Heights Commercial Shop No 3<br>Opposite Jatin Resorts<br>Dayalbagh, Agra - 282005</p>
+                <p>+91 86300 49249</p>
+                <p>info@fitless2fitness.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Fitless 2 Fitness. All rights reserved.</p>
+            <p>Co-Owners: Divyanshu Sinha & Manvendra Chaudhary</p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/918630049249?text=Hi%20F2F%20Gym%2C%20I%20am%20interested%20in%20joining.%20Please%20share%20details." class="float-whatsapp">💬</a>
+
+    <script>
+        window.addEventListener('scroll', function(){
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50){
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e){
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target){
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
